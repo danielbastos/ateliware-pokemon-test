@@ -6,6 +6,7 @@ namespace Ateliware\Pokeapi\Tests\Unit;
 
 use Ateliware\Pokeapi\Clients\PokeApiClient;
 use Ateliware\Pokeapi\DTOs\PokemonData;
+use Ateliware\Pokeapi\DTOs\PokemonHitPoint;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
@@ -42,7 +43,7 @@ final class PokeApiClientTest extends TestCase
             ]),
         ]);
 
-        $pokemon = (new PokeApiClient())->getAllPokemon();
+        $pokemon = (new PokeApiClient)->getAllPokemon();
 
         $this->assertEquals([
             new PokemonData(
@@ -69,14 +70,31 @@ final class PokeApiClientTest extends TestCase
         Http::fake([
             'https://pokeapi.test/api/v2/pokemon/pikachu' => Http::response([
                 'name' => 'pikachu',
+                'stats' => [
+                    [
+                        'base_stat' => 35,
+                        'stat' => [
+                            'name' => 'hp',
+                        ],
+                    ],
+                ],
+                'sprites' => [
+                    'front_default' => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/35.png',
+                    'other' => [
+                        'home' => [
+                            'front_default' => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/35.png',
+                        ]
+                    ]
+                ]
             ]),
         ]);
 
-        $pokemon = (new PokeApiClient())->getPokemon('pikachu');
+        $pokemon = (new PokeApiClient)->getPokemon('pikachu');
 
-        $this->assertEquals(new PokemonData(
+        $this->assertEquals(new PokemonHitPoint(
             name: 'pikachu',
-            url: 'https://pokeapi.test/api/v2/pokemon/pikachu',
+            hp: 35,
+            image_url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/35.png',
         ), $pokemon);
 
         Http::assertSent(function (Request $request): bool {
@@ -95,7 +113,7 @@ final class PokeApiClientTest extends TestCase
         $this->expectException(RequestException::class);
 
         try {
-            (new PokeApiClient())->getPokemon('missingno');
+            (new PokeApiClient)->getPokemon('missingno');
         } catch (RequestException $exception) {
             $this->assertSame(404, $exception->response->status());
 

@@ -14,6 +14,7 @@ final class PokemonHitPointTest extends TestCase
         $data = [
             'name' => 'bulbasaur',
             'hp' => 45,
+            'image_url' => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
         ];
 
         $pokemonHitPoint = PokemonHitPoint::fromArray($data);
@@ -26,6 +27,7 @@ final class PokemonHitPointTest extends TestCase
         $pokemonHitPoint = new PokemonHitPoint(
             name: 'ivysaur',
             hp: 60,
+            image_url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/2.png',
         );
 
         $roundTripPokemonHitPoint = PokemonHitPoint::fromArray($pokemonHitPoint->toArray());

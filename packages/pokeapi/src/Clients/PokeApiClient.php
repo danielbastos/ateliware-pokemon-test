@@ -25,8 +25,9 @@ final class PokeApiClient
 
         while ($url !== null) {
             $response = Http::acceptJson()->get($url)->throw()->json();
-            foreach ($response['results'] ?? [] as $item)
+            foreach ($response['results'] ?? [] as $item) {
                 $res[] = PokemonData::fromArray($item);
+            }
             $url = $response['next'] ?? null;
         }
 
@@ -37,10 +38,14 @@ final class PokeApiClient
     {
         $url = sprintf('%s/%s', $this->pokemonUrl(), rawurlencode($name));
         $response = Http::acceptJson()->get($url)->throw()->json();
+        $hitPoint = collect($response['stats'] ?? [])
+            ->first(fn (array $stat): bool => data_get($stat, 'stat.name') === 'hp');
 
         return new PokemonHitPoint(
             name: $response['name'],
-            hp: 1,
+            hp: (int) data_get($hitPoint, 'base_stat', 0),
+            image_url: $response['sprites']['other']['home']['front_default'] ??
+                $response['sprites']['front_default'],
         );
     }
 }
