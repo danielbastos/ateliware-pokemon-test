@@ -11,6 +11,10 @@
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
         </testsuite>
+        <testsuite name="Packages">
+            <directory>packages/pokeapi/tests</directory>
+            <directory>packages/pokebattle/tests</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
