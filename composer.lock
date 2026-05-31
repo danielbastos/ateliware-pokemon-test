@@ -4,8 +4,42 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "254ee6efdd4c763678dae18b70bb284c",
+    "content-hash": "539a27535803cd91e2d3cfe87998b674",
     "packages": [
+        {
+            "name": "ateliware/pokeapi",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/pokeapi",
+                "reference": "e55d7e6d7fadd732d38a14d1840fc71e909c6e1b"
+            },
+            "require": {
+                "illuminate/support": "^13.0",
+                "php": "^8.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ateliware\\Pokeapi\\PokeapiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ateliware\\Pokeapi\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "PokeAPI package.",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
         {
             "name": "brick/math",
             "version": "0.14.8",
@@ -8692,7 +8726,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "ateliware/pokeapi": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

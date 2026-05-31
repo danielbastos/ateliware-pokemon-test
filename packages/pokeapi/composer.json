@@ -1,0 +1,22 @@
+{
+    "name": "ateliware/pokeapi",
+    "description": "PokeAPI package.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ateliware\\Pokeapi\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ateliware\\Pokeapi\\PokeapiServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^13.0"
+    }
+}
