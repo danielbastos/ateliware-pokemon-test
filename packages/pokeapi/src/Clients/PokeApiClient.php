@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ateliware\Pokeapi\Clients;
 
 use Ateliware\Pokeapi\DTOs\PokemonData;
+use Ateliware\Pokeapi\DTOs\PokemonHitPoint;
 use Illuminate\Support\Facades\Http;
 
 final class PokeApiClient
@@ -32,14 +33,14 @@ final class PokeApiClient
         return $res;
     }
 
-    public function getPokemon(string $name): PokemonData
+    public function getPokemon(string $name): PokemonHitPoint
     {
         $url = sprintf('%s/%s', $this->pokemonUrl(), rawurlencode($name));
         $response = Http::acceptJson()->get($url)->throw()->json();
 
-        return new PokemonData(
+        return new PokemonHitPoint(
             name: $response['name'],
-            url: $url,
+            hp: 1,
         );
     }
 }

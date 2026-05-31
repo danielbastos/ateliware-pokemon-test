@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.3",
         "ateliware/pokeapi": "*@dev",
+        "ateliware/pokebattle": "*@dev",
         "inertiajs/inertia-laravel": "^3.1",
         "laravel/framework": "^13.8",
         "laravel/tinker": "^3.0"
@@ -90,12 +91,22 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
-    "repositories": [{
-        "name": "pokeapi",
-        "type": "path",
-        "url": "packages/pokeapi",
-        "options": {
-            "symlink": true
+    "repositories": [
+        {
+            "name": "pokeapi",
+            "type": "path",
+            "url": "packages/pokeapi",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "pokebattle",
+            "type": "path",
+            "url": "packages/pokebattle",
+            "options": {
+                "symlink": true
+            }
         }
-    }]
+    ]
 }

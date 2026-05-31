@@ -8,8 +8,14 @@ import Aura from '@primeuix/themes/aura';
 
 createInertiaApp({
     resolve: (name) => resolvePageComponent(
-        `./Pages/${name}.vue`,
-        import.meta.glob('./Pages/**/*.vue'),
+        [
+            `./Pages/${name}.vue`,
+            `../../packages/pokebattle/resources/js/Pages/${name}.vue`,
+        ],
+        {
+            ...import.meta.glob('./Pages/**/*.vue'),
+            ...import.meta.glob('../../packages/pokebattle/resources/js/Pages/**/*.vue'),
+        },
     ),
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })

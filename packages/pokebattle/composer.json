@@ -1,0 +1,22 @@
+{
+    "name": "ateliware/pokebattle",
+    "description": "Pokemon battle package.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ateliware\\Pokebattle\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ateliware\\Pokebattle\\PokebattleServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^13.0"
+    }
+}

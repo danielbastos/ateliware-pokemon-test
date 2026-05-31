@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "539a27535803cd91e2d3cfe87998b674",
+    "content-hash": "e985cc739baf11093f9eb8e8f4e49f7d",
     "packages": [
         {
             "name": "ateliware/pokeapi",
@@ -35,6 +35,40 @@
                 "MIT"
             ],
             "description": "PokeAPI package.",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "ateliware/pokebattle",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/pokebattle",
+                "reference": "2ce9b212e6866e0efe45747d2eebd4f9e8edac40"
+            },
+            "require": {
+                "illuminate/support": "^13.0",
+                "php": "^8.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ateliware\\Pokebattle\\PokebattleServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ateliware\\Pokebattle\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Pokemon battle package.",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -8727,7 +8761,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ateliware/pokeapi": 20
+        "ateliware/pokeapi": 20,
+        "ateliware/pokebattle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
