@@ -51,6 +51,23 @@ defineProps({
                             severity="secondary"
                             outlined
                         />
+
+                        <Button
+                            as="a"
+                            :href="route('login')"
+                            icon="pi pi-sign-in"
+                            label="Entrar"
+                            severity="secondary"
+                        />
+
+                        <Button
+                            as="a"
+                            :href="route('register')"
+                            icon="pi pi-user-plus"
+                            label="Cadastrar"
+                            severity="secondary"
+                            outlined
+                        />
                     </div>
                 </div>
 

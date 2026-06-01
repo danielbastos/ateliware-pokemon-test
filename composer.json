@@ -12,9 +12,12 @@
         "php": "^8.3",
         "ateliware/pokeapi": "*@dev",
         "ateliware/pokebattle": "*@dev",
-        "inertiajs/inertia-laravel": "^3.1",
+        "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^13.8",
-        "laravel/tinker": "^3.0"
+        "laravel/jetstream": "^5.5",
+        "laravel/sanctum": "^4.0",
+        "laravel/tinker": "^3.0",
+        "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

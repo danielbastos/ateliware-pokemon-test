@@ -39,8 +39,8 @@ final class BattleControllerTest extends TestCase
 
     public function test_it_renders_battle_page(): void
     {
-        config()->set('inertia.pages.paths', [
-            ...config('inertia.pages.paths', []),
+        config()->set('inertia.testing.page_paths', [
+            ...config('inertia.testing.page_paths', []),
             base_path('packages/pokebattle/resources/js/Pages'),
         ]);
 
