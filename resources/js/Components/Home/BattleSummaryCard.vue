@@ -15,16 +15,16 @@ import Card from 'primevue/card';
             <div class="grid gap-4 sm:grid-cols-3">
                 <div class="rounded-md bg-primary-50 p-4">
                     <span class="block text-sm text-surface-600">Entrada</span>
-                    <strong class="mt-1 block text-lg text-surface-950">2 Pokémons</strong>
+                    <strong class="mt-1 block text-lg text-surface-950">Entre 2 e 6 Pokémons</strong>
                 </div>
 
                 <div class="rounded-md bg-primary-50 p-4">
-                    <span class="block text-sm text-surface-600">Fonte</span>
+                    <span class="block text-sm text-surface-600">Fonte dos dados</span>
                     <strong class="mt-1 block text-lg text-surface-950">PokéAPI</strong>
                 </div>
 
                 <div class="rounded-md bg-primary-50 p-4">
-                    <span class="block text-sm text-surface-600">Critério</span>
+                    <span class="block text-sm text-surface-600">Critério da batalha</span>
                     <strong class="mt-1 block text-lg text-surface-950">HP</strong>
                 </div>
             </div>

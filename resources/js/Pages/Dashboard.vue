@@ -1,21 +1,26 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
+import BattleConfigurationForm from '../../../packages/pokebattle/resources/js/Components/BattleConfigurationForm.vue';
+
+defineProps({
+    battleConfiguration: {
+        type: Object,
+        required: true,
+    },
+});
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
+    <AppLayout title="Configurações">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
+                Configurações
             </h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <Welcome />
-                </div>
+                <BattleConfigurationForm :battle-configuration="battleConfiguration" />
             </div>
         </div>
     </AppLayout>

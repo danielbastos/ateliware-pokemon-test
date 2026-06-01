@@ -6,6 +6,7 @@ namespace Ateliware\Pokebattle\Http\Controllers;
 
 use Ateliware\Pokeapi\Clients\PokeApiClient;
 use Ateliware\Pokeapi\Models\Pokemon;
+use Ateliware\Pokebattle\Models\BattleConfiguration;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ final class BattleController
     public function index(): Response
     {
         return Inertia::render('Battle', [
-            'concorrents' => 2,
+            'concorrents' => BattleConfiguration::current()->concorrents,
         ]);
     }
 

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Ateliware\Pokebattle\Tests\Feature;
 
+use App\Models\User;
 use Ateliware\Pokeapi\Models\Pokemon;
+use Ateliware\Pokebattle\Models\BattleConfiguration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -44,12 +46,102 @@ final class BattleControllerTest extends TestCase
             base_path('packages/pokebattle/resources/js/Pages'),
         ]);
 
+        BattleConfiguration::create([
+            'concorrents' => 4,
+        ]);
+
         $response = $this->get(route('battle.index'));
 
         $response->assertOk()
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Battle')
-                ->where('concorrents', 2)
+                ->where('concorrents', 4)
+            );
+    }
+
+    public function test_it_dashboard_battle_configuration(): void
+    {
+        BattleConfiguration::create([
+            'concorrents' => 5,
+        ]);
+
+        $response = $this->actingAs(User::factory()->create())
+            ->get(route('dashboard'));
+
+        $response->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Dashboard')
+                ->where('battleConfiguration.concorrents', 5)
+            );
+    }
+
+    public function test_it_updates_battle_configuration(): void
+    {
+        BattleConfiguration::create([
+            'concorrents' => 2,
+        ]);
+
+        $response = $this->actingAs(User::factory()->create())
+            ->put(route('battle-configuration.update'), [
+                'concorrents' => 6,
+            ]);
+
+        $response->assertRedirect(route('dashboard', absolute: false));
+
+        $this->assertDatabaseHas('battle_configurations', [
+            'concorrents' => 6,
+        ]);
+    }
+
+    public function test_it_validates_battle_configuration_concorrents(): void
+    {
+        BattleConfiguration::create([
+            'concorrents' => 3,
+        ]);
+
+        $response = $this->actingAs(User::factory()->create())
+            ->from(route('dashboard'))
+            ->put(route('battle-configuration.update'), [
+                'concorrents' => 1,
+            ]);
+
+        $response->assertRedirect(route('dashboard', absolute: false))
+            ->assertSessionHasErrors('concorrents');
+
+        $this->assertDatabaseHas('battle_configurations', [
+            'concorrents' => 3,
+        ]);
+    }
+
+    public function test_unauthenticated_cannot_update_battle_configuration(): void
+    {
+        $response = $this->put(route('battle-configuration.update'), [
+            'concorrents' => 4,
+        ]);
+
+        $response->assertRedirect(route('login', absolute: false));
+    }
+
+    public function test_unauthenticated_cannot_view_dashboard(): void
+    {
+        $response = $this->get(route('dashboard'));
+
+        $response->assertRedirect(route('login', absolute: false));
+    }
+
+    public function test_it_default_battle_configuration(): void
+    {
+        config()->set('inertia.testing.page_paths', [
+            ...config('inertia.testing.page_paths', []),
+            base_path('packages/pokebattle/resources/js/Pages'),
+        ]);
+
+        $response = $this->get(route('battle.index'));
+
+        $response->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Battle')
+                ->where('concorrents', BattleConfiguration::DefaultConcorrents)
             );
     }
 
