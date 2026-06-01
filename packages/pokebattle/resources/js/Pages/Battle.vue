@@ -1,6 +1,9 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, markRaw, ref } from 'vue';
+import FirstPlaceAward from '../Components/FirstPlaceAward.vue';
 import PokemonCard from '../Components/PokemonCard.vue';
+import SecondPlaceAward from '../Components/SecondPlaceAward.vue';
+import ThirdPlaceAward from '../Components/ThirdPlaceAward.vue';
 
 const props = defineProps({
     concorrents: {
@@ -17,10 +20,28 @@ for (let i = 0; i < props.concorrents; i++) {
 
 const results = ref([]);
 
+const awards = {
+    1: markRaw(FirstPlaceAward),
+    2: markRaw(SecondPlaceAward),
+    3: markRaw(ThirdPlaceAward),
+};
+
 const orderedResults = computed(() => {
-    return [...results.value]
+    const sortedResults = [...results.value]
         .filter((result) => Number.isFinite(result.hp))
         .sort((firstResult, secondResult) => secondResult.hp - firstResult.hp);
+
+    const rankedHitPoints = [...new Set(sortedResults.map((result) => result.hp))];
+
+    return sortedResults.map((result) => {
+        const rank = rankedHitPoints.indexOf(result.hp) + 1;
+
+        return {
+            ...result,
+            rank,
+            award: awards[rank] ?? null,
+        };
+    });
 });
 
 const updateResult = (index, pokemon) => {
@@ -64,7 +85,19 @@ const getComparisonSignal = (index) => {
                         v-for="(result, index) in orderedResults"
                         :key="result.index"
                     >
-                        <div class="flex min-h-16 items-center gap-3 border border-surface-200 bg-surface-50 px-4 py-3">
+                        <div class="flex min-h-20 items-center gap-3 border border-surface-200 bg-surface-50 px-4 py-3">
+                            <span
+                                class="flex w-12 flex-col items-center justify-center text-xs font-semibold text-surface-700"
+                                :class="{ invisible: !result.award }"
+                            >
+                                <component
+                                    :is="result.award"
+                                    v-if="result.award"
+                                    class="h-8 w-8"
+                                />
+                                <span>{{ result.rank }}º</span>
+                            </span>
+
                             <img
                                 v-if="result.image_url"
                                 class="h-12 w-12 object-contain"

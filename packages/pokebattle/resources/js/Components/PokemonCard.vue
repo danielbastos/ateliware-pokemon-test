@@ -83,7 +83,7 @@ const getPokemon = async () => {
                     @keyup.enter="getPokemon"
                     @keyup="clearPokemon"
                     @option-select="getPokemon"
-                    emptySearchMessage="Nenhum pokemon encontrado"
+                    :show-empty-message="false"
                 />
 
                 <Button
