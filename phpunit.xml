@@ -19,6 +19,9 @@
     <source>
         <include>
             <directory>app</directory>
+            <directory>packages/pokeapi/src</directory>
+            <directory>packages/pokebattle/src</directory>
+            <directory>packages/pokebattle/routes</directory>
         </include>
     </source>
     <php>
