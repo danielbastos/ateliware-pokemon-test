@@ -171,7 +171,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - Run the minimal number of tests, using an appropriate filter, before finalizing.
 - To run all tests: `vendor/bin/sail artisan test --compact`.
-- To run all tests in a file: `vendor/bin/sail artisan test --compact tests/Feature/ExampleTest.php`.
+- To run all tests in a file: `vendor/bin/sail artisan test --compact
 - To filter on a particular test name: `vendor/bin/sail artisan test --compact --filter=testName` (recommended after making a change to a related file).
 
 </laravel-boost-guidelines>
