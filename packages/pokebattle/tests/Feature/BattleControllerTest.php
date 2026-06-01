@@ -6,8 +6,8 @@ namespace Ateliware\Pokebattle\Tests\Feature;
 
 use Ateliware\Pokeapi\Models\Pokemon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 final class BattleControllerTest extends TestCase
@@ -40,6 +40,22 @@ final class BattleControllerTest extends TestCase
             ]);
     }
 
+    public function test_it_renders_battle_page(): void
+    {
+        config()->set('inertia.pages.paths', [
+            ...config('inertia.pages.paths', []),
+            base_path('packages/pokebattle/resources/js/Pages'),
+        ]);
+
+        $response = $this->get(route('battle.index'));
+
+        $response->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Battle')
+                ->where('concorrents', 2)
+            );
+    }
+
     public function test_it_returns_pokemon_hit_points(): void
     {
         $base_url = 'https://pokeapia.test/api/v2';
@@ -62,9 +78,9 @@ final class BattleControllerTest extends TestCase
                     'other' => [
                         'home' => [
                             'front_default' => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/female/25.png',
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ]),
         ]);
 
