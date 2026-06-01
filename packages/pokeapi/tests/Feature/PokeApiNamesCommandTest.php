@@ -19,7 +19,6 @@ final class PokeApiNamesCommandTest extends TestCase
 
         Pokemon::create([
             'name' => 'charmander',
-            'url' => 'https://pokeapi.co/api/v2/pokemon/4/',
         ]);
 
         Http::fake([
@@ -56,20 +55,15 @@ final class PokeApiNamesCommandTest extends TestCase
 
         $this->assertDatabaseHas('pokemon', [
             'name' => 'bulbasaur',
-            'url' => 'https://pokeapi.co/api/v2/pokemon/1/',
         ]);
         $this->assertDatabaseHas('pokemon', [
             'name' => 'ivysaur',
-            'url' => 'https://pokeapi.co/api/v2/pokemon/2/',
         ]);
         $this->assertDatabaseHas('pokemon', [
             'name' => 'venusaur',
-            'url' => 'https://pokeapi.co/api/v2/pokemon/3/',
         ]);
         $this->assertDatabaseMissing('pokemon', [
             'name' => 'charmander',
-            'url' => 'https://pokeapi.co/api/v2/pokemon/4/',
         ]);
     }
-
 }

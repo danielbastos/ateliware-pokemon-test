@@ -12,6 +12,5 @@ final class Pokemon extends Model
 
     protected $fillable = [
         'name',
-        'url',
     ];
 }

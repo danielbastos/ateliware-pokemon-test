@@ -13,7 +13,6 @@ final class PokemonDataTest extends TestCase
     {
         $data = [
             'name' => 'bulbasaur',
-            'url' => 'https://pokeapi.co/api/v2/pokemon/1/',
         ];
 
         $pokemonData = PokemonData::fromArray($data);
@@ -25,7 +24,6 @@ final class PokemonDataTest extends TestCase
     {
         $pokemonData = new PokemonData(
             name: 'ivysaur',
-            url: 'https://pokeapi.co/api/v2/pokemon/2/',
         );
 
         $roundTripPokemonData = PokemonData::fromArray($pokemonData->toArray());

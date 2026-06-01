@@ -6,6 +6,7 @@ namespace Ateliware\Pokebattle\Http\Controllers;
 
 use Ateliware\Pokeapi\Clients\PokeApiClient;
 use Ateliware\Pokeapi\Models\Pokemon;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,7 +14,6 @@ use Inertia\Response;
 
 final class BattleController
 {
-
     public function index(): Response
     {
         return Inertia::render('Battle', [
@@ -47,7 +47,17 @@ final class BattleController
             'name' => ['required', 'string', 'max:255'],
         ]);
 
-        $pokemon = $pokeApiClient->getPokemon(mb_strtolower($validated['name']));
+        try {
+            $pokemon = $pokeApiClient->getPokemon(mb_strtolower($validated['name']));
+        } catch (RequestException $exception) {
+            return response()->json([
+                'message' => 'Pokemon not found.',
+            ], $exception->response->status());
+        }
+
+        Pokemon::query()->firstOrCreate([
+            'name' => $pokemon->name,
+        ]);
 
         return response()->json($pokemon->toArray());
     }

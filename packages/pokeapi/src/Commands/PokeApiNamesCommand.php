@@ -24,14 +24,13 @@ final class PokeApiNamesCommand extends Command
             foreach ($pokemonData as $pokemon) {
                 Pokemon::query()->updateOrCreate(
                     ['name' => $pokemon->name],
-                    $pokemon->toArray(),
                 );
                 $names[] = $pokemon->name;
             }
 
             $deleted = Pokemon::whereNotIn('name', $names)->delete();
-            $this->line(count($names) . ' insert/update');
-            $this->line($deleted . ' deleted');
+            $this->line(count($names).' insert/update');
+            $this->line($deleted.' deleted');
         });
 
         return self::SUCCESS;

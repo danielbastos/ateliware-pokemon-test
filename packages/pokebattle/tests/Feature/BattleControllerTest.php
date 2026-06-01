@@ -18,15 +18,12 @@ final class BattleControllerTest extends TestCase
     {
         Pokemon::create([
             'name' => 'pikachu',
-            'url' => 'https://pokeapi.co/api/v2/pokemon/25/',
         ]);
         Pokemon::create([
             'name' => 'pichu',
-            'url' => 'https://pokeapi.co/api/v2/pokemon/172/',
         ]);
         Pokemon::create([
             'name' => 'bulbasaur',
-            'url' => 'https://pokeapi.co/api/v2/pokemon/1/',
         ]);
 
         $response = $this->getJson('/battle/names?query=pi');
@@ -92,5 +89,30 @@ final class BattleControllerTest extends TestCase
                 'hp' => 35,
                 'image_url' => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/female/25.png',
             ]);
+
+        $this->assertDatabaseHas('pokemon', [
+            'name' => 'pikachu',
+        ]);
+    }
+
+    public function test_it_dont_create_pokemon_when_api_returns_an_error(): void
+    {
+        $base_url = 'https://pokeapia.test/api/v2';
+        config()->set('pokeapi.base_url', $base_url);
+
+        Http::fake([
+            "{$base_url}/pokemon/missingno" => Http::response([], 404),
+        ]);
+
+        $response = $this->getJson('/battle/pokemon?name=missingno');
+
+        $response->assertNotFound()
+            ->assertJson([
+                'message' => 'Pokemon not found.',
+            ]);
+
+        $this->assertDatabaseMissing('pokemon', [
+            'name' => 'missingno',
+        ]);
     }
 }

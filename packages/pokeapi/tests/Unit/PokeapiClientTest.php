@@ -46,18 +46,9 @@ final class PokeApiClientTest extends TestCase
         $pokemon = (new PokeApiClient)->getAllPokemon();
 
         $this->assertEquals([
-            new PokemonData(
-                name: 'bulbasaur',
-                url: 'https://pokeapi.co/api/v2/pokemon/1/',
-            ),
-            new PokemonData(
-                name: 'ivysaur',
-                url: 'https://pokeapi.co/api/v2/pokemon/2/',
-            ),
-            new PokemonData(
-                name: 'venusaur',
-                url: 'https://pokeapi.co/api/v2/pokemon/3/',
-            ),
+            new PokemonData(name: 'bulbasaur'),
+            new PokemonData(name: 'ivysaur'),
+            new PokemonData(name: 'venusaur'),
         ], $pokemon);
 
         Http::assertSentCount(2);
@@ -83,9 +74,9 @@ final class PokeApiClientTest extends TestCase
                     'other' => [
                         'home' => [
                             'front_default' => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/35.png',
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ]),
         ]);
 
